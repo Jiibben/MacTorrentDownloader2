@@ -5,21 +5,38 @@ from selenium import webdriver
 import os
 from selenium.webdriver.chrome.options import Options
 import json
+from os import path
 
 class TorrentDownloader:
-    def __init__(self, webdriver_path, download_path, already_downloaded_path, url="https://mac-torrents.io/"):
-
+    def __init__(self, webdriver_path, download_path, already_downloaded_path, url):
         self.url = url
         self.download_path = download_path
         self.webdriver_path = webdriver_path
         self.already_downloaded_path = already_downloaded_path
         self.already_downloaded = self.get_already_downloaded(already_downloaded_path)
+        self.__check_settings()
 
     def get_already_downloaded(self, path):
         return json.load(open(path, "r"))["downloaded"]
+    
+    def create_json_file(self):
+        json.dump({"downloaded":[]}, open(self.already_downloaded_path, "w+"))
+    
+    def __check_settings(self):
+        if not path.isdir(self.download_path):
+            raise FileNotFoundError(f"{self.download_path} doesn't exist")
 
+        if not path.isfile(self.webdriver_path):
+            raise FileNotFoundError(f"chrome driver not found at {self.webdriver_path}")
+        
+        if not path.isfile(self.already_downloaded_path):
+            raise FileNotFoundError(f"{self.already_downloaded_path} file doesn't exist")
+
+    
     def __setup_chromedriver(self):
+        os.path.isdir(self.download_path)
         os.environ["webdriver.chrome.driver"] = self.webdriver_path
+        
         chrome_options = Options()
         prefs = {
             'profile.default_content_setting_values.automatic_downloads': 1,
@@ -50,6 +67,7 @@ class TorrentDownloader:
             json.dump({"downloaded":self.already_downloaded}, file)
         
     def download_torrents(self):
+
         downloaded = list()
         fetched_torrents = self.__fetch_new_torrents()
         driver = self.__setup_chromedriver()
@@ -59,10 +77,4 @@ class TorrentDownloader:
             downloaded.append(torrent.url)
 
         self.__add_to_downloaded(downloaded)
-        return "done"
-        
-
-
-if __name__ == '__main__':
-    downloader = TorrentDownloader("/usr/bin/chromedriver", "/home/allanburnier/Documents/projects/new_mactorrent_downloader/downloads", "/home/allanburnier/Documents/projects/new_mactorrent_downloader/already_downloaded.json")
-    print(downloader.download_torrents())
+        print("download finished")

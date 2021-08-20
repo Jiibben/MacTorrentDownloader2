@@ -1,5 +1,6 @@
 {
     "webdriver_path":"/usr/bin/chromedriver",
-    "download_path":"/home/allanburnier/Documents/projects/new_mactorrent_downloader/downloads",
-    "already_downloaded_json_path":"/home/allanburnier/Documents/projects/new_mactorrent_downloader/already_downloaded.json"
+    "download_path":"",
+    "already_downloaded_path":"",
+    "url":""
 }
