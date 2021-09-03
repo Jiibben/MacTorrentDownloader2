@@ -53,5 +53,6 @@ if __name__ == "__main__":
     print("")
     create_json_file()
     config_file()
-
+    print("[+] setup finished")
+    print("you can now run the script using python3 main.py")
     
