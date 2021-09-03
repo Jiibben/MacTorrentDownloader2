@@ -44,12 +44,13 @@ def getting_required_pip():
     print("[+] successfully installed requirements")
 
 if __name__ == "__main__":
+    print("installing dependencies")
+    getting_required_pip()
     print(pyfiglet.figlet_format("TORRENT DOWNLOADER"))
     print(" made by Jibben ".center(65, "-"))
     print("")
     print("make sure that you have google chrome installed and the latest chromedriver (and you know the path to it)")
     print("")
-    getting_required_pip()
     create_json_file()
     config_file()
 
