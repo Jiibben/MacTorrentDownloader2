@@ -13,3 +13,10 @@ class ConfigHandler:
         for i in config:
             setattr(self, i, config[i])
 
+    def __set_config(self, conf_obj):
+        json.dump(open(self.config_path, "w+"), conf_obj)
+
+    def add_config(self, name, arg):
+        conf = self.__read_config()
+        conf[name] = arg
+        self.__set_config()
