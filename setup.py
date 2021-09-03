@@ -1,7 +1,6 @@
 import json
 import os
 import sys
-import pyfiglet
 import subprocess
 
 def create_json_file():
@@ -44,8 +43,9 @@ def getting_required_pip():
     print("[+] successfully installed requirements")
 
 if __name__ == "__main__":
-    print("installing dependencies")
+    print("[+] installing dependencies")
     getting_required_pip()
+    import pyfiglet
     print(pyfiglet.figlet_format("TORRENT DOWNLOADER"))
     print(" made by Jibben ".center(65, "-"))
     print("")
