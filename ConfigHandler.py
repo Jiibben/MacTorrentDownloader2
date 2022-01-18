@@ -6,8 +6,11 @@ class ConfigHandler:
 
     
     def __read_config(self):
-        return json.load(open(self.config_path, "r"))
-    
+        try:
+            a = json.load(open(self.config_path, "r"))
+        except FileNotFoundError:
+            print("[-] config file not found please run the setup.py")
+
     def __fetch_config(self):
         config = self.__read_config()
         for i in config:
